@@ -4,6 +4,7 @@ import { HomeComponent } from './components/home/home.component';
 import { PokemonPageComponent } from './components/pokemon-page/pokemon-page.component';
 
 export const MAIN_ROUTES: Routes = [
-    { path: '', component: PokemonPageComponent },
+    { path: '', component: HomeComponent },
     { path: 'about', component: AboutComponent },
+    { path: 'pokepage', component: PokemonPageComponent }
 ]
