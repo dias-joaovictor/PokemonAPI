@@ -1,0 +1,16 @@
+<div class="container">
+  <table class="table" *ngIf="pokemons">
+    <thead>
+      <tr>
+        <th scope="col">PokéName</th>
+        <th scope="col">URL</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pokemon of pokemons">
+        <th scope="row">{{pokemon.name}}</th>
+        <td>{{pokemon.url}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
