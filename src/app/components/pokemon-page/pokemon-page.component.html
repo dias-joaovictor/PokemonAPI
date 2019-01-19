@@ -16,13 +16,13 @@
 </div>
 <nav aria-label="Page navigation example">
   <ul class="pagination justify-content-center">
-    <li class="page-item " (click)="previousPage()">
-      <a class="page-link" >Previous</a>
+    <li class="page-item " [class.disabled]="isPreviousBlocked()" (click)="previousPage()">
+      <a class="page-link">Previous</a>
     </li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item"  (click)="nextPage()">
+    <li *ngIf="!isPreviousBlocked()" class="page-item"><a class="page-link" (click)="previousPage()">{{previousPagenmbr}}</a></li>
+    <li class="page-item active"><a class="page-link ">{{page}}</a></li>
+    <li  *ngIf="!isNextBlocked()"class="page-item"><a class="page-link" (click)="nextPage()">{{nextPagenmbr}}</a></li>
+    <li class="page-item" [class.disabled]="isNextBlocked()" (click)="nextPage()">
       <a class="page-link">Next</a>
     </li>
   </ul>

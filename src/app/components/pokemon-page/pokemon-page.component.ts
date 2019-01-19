@@ -16,13 +16,15 @@ export class PokemonPageComponent implements OnInit, AfterContentInit {
   page: number;
   offset: number;
   limit: number;
+  nextPagenmbr: number;
+  previousPagenmbr: number;
 
   constructor(private pokemonHttpService: PokemonHttpService, private route: ActivatedRoute, private router: Router) { }
 
 
   ngOnInit() {
     this.page = this.route.snapshot.params['page'];
-    if (!this.page) {
+    if (!this.page || this.page < 1) {
       this.loadFirstPokemons();
     } else {
       this.loadPage();
@@ -37,19 +39,20 @@ export class PokemonPageComponent implements OnInit, AfterContentInit {
 
   loadFirstPokemons() {
     this.checkOffsetndLimit();
-    this.page = 0;
-    this.pokemonHttpService.getPokemonsWhithLimitOffSet(this.offset, this.limit)
-      .subscribe(item => { this.pokemonPageDTO = item; });
+    this.page = 1;
+    this.router.navigateByUrl('/pokepage/' + this.page);
+    this.loadPage();
+
   }
 
   loadPage() {
-    this.offset = 20 * this.page;
-    if (this.page <= 1) {
-      this.offset = 0;
-    }
+    this.offset = 20 * (this.page - 1);
     this.limit = 20;
     this.pokemonHttpService.getPokemonsWhithLimitOffSet(this.offset, this.limit)
       .subscribe(item => { this.pokemonPageDTO = item; });
+    this.nextPagenmbr = this.page;
+    this.nextPagenmbr++;
+    this.previousPagenmbr = this.page - 1;
   }
 
   checkOffsetndLimit() {
@@ -62,25 +65,32 @@ export class PokemonPageComponent implements OnInit, AfterContentInit {
   }
 
   nextPage() {
-    this.page++;
-    // this.router.navigateByUrl('pokepage/' + this.actualPage);
+    if (!this.isNextBlocked()) {
+      this.page++;
+    }
+
+
     this.router.navigateByUrl('/pokepage/' + this.page);
     this.loadPage();
   }
 
   previousPage() {
-    if (this.page !== 1) {
-      this.page--;
+    if (!this.isPreviousBlocked()) {
+      this.page -= 1;
     }
-    // this.router.navigateByUrl('pokepage/' + this.actualPage);
     this.router.navigateByUrl('/pokepage/' + this.page);
     this.loadPage();
   }
 
   isNextBlocked(): boolean {
-    const aux = Math.ceil(this.pokemonPageDTO.count / this.limit);
-    return this.page === aux;
+    if (this.pokemonPageDTO) {
+      const aux = Math.ceil(this.pokemonPageDTO.count / this.limit);
+      return this.page === aux;
+    }
+  }
 
+  isPreviousBlocked(): boolean {
+    return this.page <= 1;
   }
 }
 
