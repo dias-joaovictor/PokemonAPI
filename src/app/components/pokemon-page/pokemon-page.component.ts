@@ -9,9 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PokemonPageComponent implements OnInit {
 
-  pokemons : PokemonDTO[] = [];
+  pokemons: PokemonDTO[] = [];
 
-  constructor(private pokemonHttpService : PokemonHttpService) { }
+  constructor(private pokemonHttpService: PokemonHttpService) { }
 
   ngOnInit() {
     this.pokemonHttpService.getAllPokemons().subscribe(itens => this.pokemons = itens.results
