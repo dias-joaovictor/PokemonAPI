@@ -1,4 +1,4 @@
-export class PokemonDTO {
+export class PokemonResultDTO {
 
     name: string;
     url: string;

@@ -1,5 +1,5 @@
 <div class="container">
-  <table class="table" *ngIf="pokemons">
+  <table class="table" *ngIf="pokemonPageDTO">
     <thead>
       <tr>
         <th scope="col">PokéName</th>
@@ -7,10 +7,25 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let pokemon of pokemons">
+      <tr *ngFor="let pokemon of  pokemonPageDTO.results">
         <th scope="row">{{pokemon.name}}</th>
         <td>{{pokemon.url}}</td>
       </tr>
     </tbody>
   </table>
 </div>
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+    <li class="page-item " (click)="previousPage()">
+      <a class="page-link" >Previous</a>
+    </li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item"  (click)="nextPage()">
+      <a class="page-link">Next</a>
+    </li>
+  </ul>
+</nav>
+
+<!-- <button type="button" (click)="previousPage()">back</button> -->

@@ -19,7 +19,7 @@ import { PokemonPageComponent } from './components/pokemon-page/pokemon-page.com
     FooterComponent,
     HomeComponent,
     AboutComponent,
-    PokemonPageComponent
+    PokemonPageComponent,
   ],
   imports: [
     BrowserModule,
