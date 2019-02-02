@@ -8,7 +8,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let pokemon of  pokemonPageDTO.results">
-        <th scope="row">{{pokemon.name}}</th>
+        <th scope="row">{{pokemon.name| titlecase}}</th>
         <td>{{pokemon.url}}</td>
       </tr>
     </tbody>

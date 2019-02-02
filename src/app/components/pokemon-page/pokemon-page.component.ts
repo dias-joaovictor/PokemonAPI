@@ -24,7 +24,7 @@ export class PokemonPageComponent implements OnInit, AfterContentInit {
 
   ngOnInit() {
     this.page = this.route.snapshot.params['page'];
-    if (!this.page || this.page < 1) {
+    if (!this.page || this.page < 1 || this.isNextBlocked()) {
       this.loadFirstPokemons();
     } else {
       this.loadPage();
@@ -50,9 +50,8 @@ export class PokemonPageComponent implements OnInit, AfterContentInit {
     this.limit = 20;
     this.pokemonHttpService.getPokemonsWhithLimitOffSet(this.offset, this.limit)
       .subscribe(item => { this.pokemonPageDTO = item; });
-    this.nextPagenmbr = this.page;
-    this.nextPagenmbr++;
-    this.previousPagenmbr = this.page - 1;
+    this.nextPagenmbr = +this.page + 1;
+    this.previousPagenmbr = +this.page - 1;
   }
 
   checkOffsetndLimit() {
@@ -68,8 +67,6 @@ export class PokemonPageComponent implements OnInit, AfterContentInit {
     if (!this.isNextBlocked()) {
       this.page++;
     }
-
-
     this.router.navigateByUrl('/pokepage/' + this.page);
     this.loadPage();
   }
@@ -92,6 +89,7 @@ export class PokemonPageComponent implements OnInit, AfterContentInit {
   isPreviousBlocked(): boolean {
     return this.page <= 1;
   }
+
 }
 
 
