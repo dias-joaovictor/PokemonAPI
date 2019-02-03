@@ -3,6 +3,7 @@ import { PokemonHttpService } from './service/pokemon/pokemon-http-service';
 import { MAIN_ROUTES as MAIN_ROUTES } from './app.routes';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, Injectable } from '@angular/core';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -23,6 +24,7 @@ import { PokemonPageComponent } from './components/pokemon-page/pokemon-page.com
   ],
   imports: [
     BrowserModule,
+    NgbModule,
     HttpModule,
     RouterModule.forRoot(MAIN_ROUTES)
   ],

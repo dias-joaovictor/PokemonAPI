@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, filter, catchError, mergeMap } from 'rxjs/operators';
 import { PokemonPageDTO } from 'src/app/model/dto/pokemonPage-dto';
+import { Pokemon } from 'src/app/model/dto/pokemon-dto';
 
 @Injectable()
 export class PokemonHttpService {
@@ -27,5 +28,13 @@ export class PokemonHttpService {
                 map(response => response.json())
             );
     }
+
+    getPokemonByUrl(url: String): Observable<Pokemon> {
+        return this.http.get(url + '').pipe(
+            map(response => response.json())
+        );
+    }
+
+
 
 }

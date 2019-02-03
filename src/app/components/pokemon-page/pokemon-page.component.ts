@@ -3,6 +3,10 @@ import { Component, OnInit, AfterContentInit, Input } from '@angular/core';
 import { PokemonPageDTO } from 'src/app/model/dto/pokemonPage-dto';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
+import { Pokemon } from 'src/app/model/dto/pokemon-dto';
+import { PokemonResultDTO } from 'src/app/model/dto/pokemonResult-dto';
+import { EventEmitter } from 'events';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -18,8 +22,14 @@ export class PokemonPageComponent implements OnInit, AfterContentInit {
   limit: number;
   nextPagenmbr: number;
   previousPagenmbr: number;
+  closeResult: string;
+  pokemon: Pokemon;
 
-  constructor(private pokemonHttpService: PokemonHttpService, private route: ActivatedRoute, private router: Router) { }
+
+
+
+  constructor(private pokemonHttpService: PokemonHttpService,
+    private route: ActivatedRoute, private router: Router, private modalService: NgbModal) { }
 
 
   ngOnInit() {
@@ -89,6 +99,31 @@ export class PokemonPageComponent implements OnInit, AfterContentInit {
   isPreviousBlocked(): boolean {
     return this.page <= 1;
   }
+
+  loadPokemon(url: String) {
+    this.pokemonHttpService.getPokemonByUrl(url).subscribe(item => { this.pokemon = item; });
+  }
+
+  open(content, url: String) {
+    this.loadPokemon(url);
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+
+
 
 }
 
