@@ -101,6 +101,7 @@ export class PokemonPageComponent implements OnInit, AfterContentInit {
   }
 
   loadPokemon(url: String) {
+    console.log(url);
     this.pokemonHttpService.getPokemonByUrl(url).subscribe(item => { this.pokemon = item; });
   }
 
@@ -111,7 +112,9 @@ export class PokemonPageComponent implements OnInit, AfterContentInit {
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
+
   }
+
 
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
@@ -122,6 +125,7 @@ export class PokemonPageComponent implements OnInit, AfterContentInit {
       return `with: ${reason}`;
     }
   }
+
 
 
 

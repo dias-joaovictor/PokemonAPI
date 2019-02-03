@@ -3,13 +3,13 @@
     <thead>
       <tr>
         <th scope="col">PokéName</th>
-        <th scope="col">URL</th>
+        <th scope="col">Info</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let pokemon of  pokemonPageDTO.results">
         <th scope="row">{{pokemon.name| titlecase}}</th>
-        <td><button class="btn btn-lg btn-outline-primary" (click)="open(content,pokemon.url)">More</button>
+        <td (mouseenter)="loadPokemon(pokemon.url)"><button class="btn btn-lg btn-outline-primary" (click)="open(content,pokemon.url)">More</button>
         </td>
       </tr>
     </tbody>
@@ -31,25 +31,97 @@
 
 <ng-template #content let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+    <h4 class="modal-title" id="modal-basic-title">{{pokemon.name| titlecase}}</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
-    <form>
-      <div class="form-group">
-        <label for="dateOfBirth" *ngIf="pokemon">{{pokemon.name| titlecase}}</label>
-        <div class="input-group">
-          <input id="dateOfBirth" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker">
-          <div class="input-group-append">
-            <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>
+
+    <div class="form-group">
+      <div class="row">
+        <div class="col-12">
+          <div class="d-flex justify-content-center"><img [src]="pokemon.sprites.front_default" /></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 col-12">
+          <div class="input-group d-flex justify-content-center my-2">
+            <div>
+              <div ngbDropdown role="group" aria-label="Button group with nested dropdown">
+                <button class="btn btn-outline-primary" ngbDropdownToggle>Abilities:</button>
+                <div class="dropdown-menu" ngbDropdownMenu>
+                  <button *ngFor="let poke of  pokemon.abilities" class="dropdown-item">{{poke.ability.name}}</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 col-12">
+          <div class="input-group d-flex justify-content-center my-2">
+            <div>
+              <div ngbDropdown role="group" aria-label="Button group with nested dropdown">
+                <button class="btn btn-outline-secondary" ngbDropdownToggle>Forms: &nbsp;</button>
+                <div class="dropdown-menu" ngbDropdownMenu>
+                  <button *ngFor="let form of  pokemon.forms" class="dropdown-item">{{form.name}}</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 col-12">
+          <div class="input-group d-flex justify-content-center my-2">
+            <div ngbDropdown role="group" aria-label="Button group with nested dropdown">
+              <button class="btn btn-outline-danger" ngbDropdownToggle>Moves: &nbsp;</button>
+              <div class="dropdown-menu" ngbDropdownMenu>
+                <button *ngFor="let poke of pokemon.moves" class="dropdown-item">{{poke.move.name}}</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </form>
+      <div class="row mt-2">
+        <div class="input-group">
+          <label class="ml-3" for="" *ngIf="pokemon">Name: </label>
+          <label class="ml-2" for="dateOfBirth" *ngIf="pokemon"><b>{{pokemon.name| titlecase}}</b></label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-group">
+          <label class="ml-3" for="" *ngIf="pokemon">Order: </label>
+          <label class="ml-2" for="dateOfBirth" *ngIf="pokemon"><b>{{pokemon.order}}</b></label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-group">
+          <label class="ml-3" for="" *ngIf="pokemon">Species: </label>
+          <label class="ml-2" for="dateOfBirth" *ngIf="pokemon"><b>{{pokemon.species.name}}</b></label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-group">
+          <label class="ml-3" for="" *ngIf="pokemon">Height: </label>
+          <label class="ml-2" for="dateOfBirth" *ngIf="pokemon"><b>{{pokemon.height}}</b></label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-group">
+          <label class="ml-3" for="" *ngIf="pokemon">Weight: </label>
+          <label class="ml-2" for="dateOfBirth" *ngIf="pokemon"><b>{{pokemon.weight}}</b></label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-group">
+          <label class="ml-3" for="" *ngIf="pokemon">Base Experience: </label>
+          <label class="ml-2" for="dateOfBirth" *ngIf="pokemon"><b>{{pokemon.base_experience}}</b></label>
+        </div>
+      </div>
+
+
+    </div>
+
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+    <button type="button" class="btn btn-outline-primary" ngbAutofocus (click)="modal.close('Save click')">Save</button>
   </div>
 </ng-template>
